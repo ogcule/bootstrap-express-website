@@ -1,0 +1,11 @@
+{
+  "name": "bootstrap-express-website",
+  "version": "1.0.0",
+  "description": "My practice bootstrap express website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Oliver Cule",
+  "license": "ISC"
+}
