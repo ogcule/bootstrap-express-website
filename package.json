@@ -27,7 +27,9 @@
     "webpack-dev-server": "^2.8.2"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0-alpha.6",
+    "express": "^4.15.5",
     "jquery": "^3.2.1",
     "popper.js": "^1.12.5",
     "tooltip.js": "^1.1.5"
