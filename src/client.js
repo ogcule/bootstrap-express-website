@@ -1,3 +1,10 @@
+$(document).ready(function() {
+
+$.ajax('/family',{
+  type:"GET",
+
+})
+
 $('form').on('submit', function(e){
   event.preventDefault(); //prevents submit and refreash of page
   let form = $(this);
@@ -7,4 +14,10 @@ $('form').on('submit', function(e){
   }).done(function(name){
     console.log(name);
   });
+  function appendToList(name,description){
+
+  }
+});
+
+
 });
