@@ -8,9 +8,8 @@
     "build": "webpack",
     "build:watch": "webpack --watch",
     "webpack:server": "webpack-dev-server --hot --inline --open",
-    "start": "node ./server/server.js",
-    "build:start": "npm-run-all build build:server",
-    "kill": "kill -9 3000"
+    "build:server": "nodemon ./server/server.babel.js",
+    "start": "npm-run-all --parallel build:*"
   },
   "author": "Oliver Cule",
   "license": "ISC",
