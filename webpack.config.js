@@ -3,7 +3,7 @@ const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
-  entry: "./src/index.js",
+  entry: __dirname + '/src/index.js',
   module: {
   rules: [
     {
@@ -50,7 +50,8 @@ plugins: [
         $: 'jquery',
         jQuery: 'jquery',
         'window.jQuery': 'jquery',
-        Popper: ['popper.js', 'default']
+        Popper: ['popper.js', 'default'],
+        "Tether": 'tether'
       }),
       new ExtractTextPlugin("styles.css"),
       new HtmlWebpackPlugin({
@@ -59,7 +60,7 @@ plugins: [
      new webpack.HotModuleReplacementPlugin()
    ],
    output: {
-     filename: 'bundle.js',
+     filename: '[name].bundle.js',
      path: path.resolve(__dirname,'dist')
    }
 }

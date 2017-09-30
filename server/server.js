@@ -1,21 +1,24 @@
-const express = require('express');
-const app = express();
-const path = require('path');
-const bodyParser =require('body-parser');
+var express = require('express');
+var app = express();
+var path = require('path');
+var bodyParser =require('body-parser');
+var logger = require('morgan');
 
-let parseUrlencoded = bodyParser.urlencoded({ extended: false});
+var parseUrlencoded = bodyParser.urlencoded({ extended: false});
 
-let family = {
+var family = {
   'Mia': 'little cheeky monkey',
   'Isobel': 'The sassy one',
   'Charlie': 'The dude',
   'Mummy': 'The sensible one',
   'Daddy': 'The awesome one'
 };
+app.use(logger('combined'));
 app.use(express.static('./../dist'));
-app.post('/family', parseUrlencoded, function(request,response){
+app.get('/family', function(request, response){
   response.json(family);
 });
-app.listen(3000, ()=> {
-  console.log('express server listening on port 3000');
+var port = process.env.PORT || 8080;
+app.listen(port, function() {
+  console.log('express server listening on port 8080');
 });
