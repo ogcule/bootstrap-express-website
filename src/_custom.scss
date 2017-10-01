@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC|Josefin+Sans');
+html, body {
+  height: 100%;
+}
 body {
-  background: url('./wood-bg.png') no-repeat center;
+  background: url('./wood-bg.png') repeat center;
   background-size: cover;
 }
 form, button,li{

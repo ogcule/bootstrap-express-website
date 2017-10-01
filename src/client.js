@@ -1,7 +1,7 @@
 export default function(){
 $(document).ready(function () {
   function liElement(name,description){
-    return `<li class="list-group-item"><ul class="inner-list"><li><button type="button" class="close float-left" aria-label="Close">
+    return `<li class="list-group-item"><ul class="inner-list"><li><button type="button" class="close float-left" aria-label="Close" data-name="${name}">
   <span aria-hidden="true">&times;</span>
 </button><span>Name:</span> ${name}</li><li><span>Description:</span> ${description}</li></ul></li>`;
   }
@@ -19,6 +19,9 @@ $.get('/family', function(data){
 
 $('form').on('submit', function(e){
   event.preventDefault(); //prevents submit and refreash of page
+  if( !$('#nameInput').val() || !$('#descriptionInput').val()){
+    alert("you have not filled in both fields");
+  } else {
   let form = $(this);
   $.ajax('/family', {
     method: 'POST',
@@ -28,7 +31,22 @@ $('form').on('submit', function(e){
     $('.family-list').append(liElement(response.name, response.description));
 form.trigger('reset'); //cleans up form text input fields
   });
-});
+}
 });
 
+
+$('.family-list').on('click', 'button[data-name]', (event) => {
+  if (!confirm('Do you really want to get rid of one of your family!')){
+    return false;
+  }
+  let target = $(event.currentTarget);
+  $.ajax({
+   method: 'DELETE',
+   url:'/family/' + target.data('name')
+ }).done( (res)=> {
+   console.log(res);
+   target.parents('li').remove();
+ })
+});
+});
 }

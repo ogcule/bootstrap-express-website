@@ -15,12 +15,22 @@ let family = [
 ];
 app.use(logger('combined'));
 app.use(express.static(path.join(__dirname, '..', 'dist')));
-app.get('/family', function(request, response){
+
+app.route('/family').get(function(request, response){
    response.json(family);
-});
-app.post('/family',parseUrlencoded, function(request,response){
+}).post(parseUrlencoded, function(request,response){
   let newMember = request.body;
   response.status(201).json(newMember);
+});
+
+app.delete('/family/:name', function(req, res){
+let toBeDeleted = family.findIndex( (member) => {
+  if (member.name === req.params.name){
+    return true
+  }
+});
+family.splice(toBeDeleted,1);
+res.json(family);
 });
 
 let port = process.env.PORT || 3000;
