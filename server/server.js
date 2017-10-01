@@ -18,6 +18,11 @@ app.use(express.static(path.join(__dirname, '..', 'dist')));
 app.get('/family', function(request, response){
    response.json(family);
 });
+app.post('/family',parseUrlencoded, function(request,response){
+  let newMember = request.body;
+  response.status(201).json(newMember);
+});
+
 let port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log('express server listening on port 3000');

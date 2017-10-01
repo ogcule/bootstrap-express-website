@@ -1,8 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC|Josefin+Sans');
+body {
+  background: url('./wood-bg.png') no-repeat center;
+  background-size: cover;
+}
+form, button,li{
+  font-family: 'Josefin Sans', sans-serif;
+}
 .form-container {
+  h1{
+    font-size: 4em;
+    font-weight: 600;
+    font-family: 'Amatic SC', cursive;
+  }
+  form, button,li{
+    font-family: 'Josefin Sans', sans-serif;
+  }
   padding: 1em;
   border-radius: 5px;
   margin: 1em 0;
-  background: black;
+  background: url('./family.png') no-repeat center bottom;
+  background-size: cover;
   color: white;
 }
 button {
@@ -19,7 +36,10 @@ button {
     margin: 0;
     padding: 0;
     display:flex;
-
+span{
+  font-weight: 600;
+  color:#4A5A47;
+}
   li{
     flex: 1;
     width:100px;
