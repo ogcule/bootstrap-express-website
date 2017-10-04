@@ -3,26 +3,16 @@ const app = express();
 import path from 'path';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
-import mongoDB from './mongoDB';
-mongoDB();
+const MongoClient = require('mongodb').MongoClient
+import assert from 'assert';
+const ObjectId = require('mongodb').ObjectID;
 
+let url = 'mongodb://localhost:27017/family';
+let port = process.env.PORT || 3000;
 let parseUrlencoded = bodyParser.urlencoded({ extended: false});
-let family = [
-  { name: 'Mia', description: 'little cheeky monkey'},
-  { name: 'Isobel', description: 'The sassy one'},
-  { name:'Charlie', description: 'The dude'},
-  { name: 'Mummy', description: 'The sensible one'},
-  { name: 'Daddy', description: 'The awesome one'}
-];
+
 app.use(logger('combined'));
 app.use(express.static(path.join(__dirname, '..', 'dist')));
-
-app.route('/family').get(function(request, response){
-   response.json(family);
-}).post(parseUrlencoded, function(request,response){
-  let newMember = request.body;
-  response.status(201).json(newMember);
-});
 
 app.delete('/family/:name', function(req, res){
 let toBeDeleted = family.findIndex( (member) => {
@@ -34,7 +24,26 @@ family.splice(toBeDeleted,1);
 res.json(family);
 });
 
-let port = process.env.PORT || 3000;
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+  let collection = db.collection('member');
+  console.log("Connected successfully to server");
+  app.route('/family').get(function(request, response){
+    collection.find({}).toArray(function(err, docs) {
+      assert.equal(err, null);
+      console.log("Found the following records");
+      console.log(docs);
+      response.json(docs);
+    });
+  }).post(parseUrlencoded, function(request,response){
+    let newMember = request.body;
+    response.status(201).json(newMember);
+    console.log(newMember);
+    collection.insertOne(newMember);
+
+  });
+    });
+
 app.listen(port, () => {
-  console.log('express server listening on port 3000');
+  console.log('express server listening on port ' + port);
 });
