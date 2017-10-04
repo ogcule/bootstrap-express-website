@@ -3,9 +3,10 @@ const app = express();
 import path from 'path';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
+import mongoDB from './mongoDB';
+mongoDB();
 
 let parseUrlencoded = bodyParser.urlencoded({ extended: false});
-
 let family = [
   { name: 'Mia', description: 'little cheeky monkey'},
   { name: 'Isobel', description: 'The sassy one'},
