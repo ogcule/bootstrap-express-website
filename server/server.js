@@ -14,16 +14,6 @@ let parseUrlencoded = bodyParser.urlencoded({ extended: false});
 app.use(logger('combined'));
 app.use(express.static(path.join(__dirname, '..', 'dist')));
 
-app.delete('/family/:name', function(req, res){
-let toBeDeleted = family.findIndex( (member) => {
-  if (member.name === req.params.name){
-    return true
-  }
-});
-family.splice(toBeDeleted,1);
-res.json(family);
-});
-
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
   let collection = db.collection('member');
@@ -42,7 +32,11 @@ MongoClient.connect(url, function(err, db) {
     collection.insertOne(newMember);
 
   });
-    });
+  app.delete('/family/:name', function(req, res){
+    collection.deleteOne({name:req.params.name});
+    res.send(req.params.name +" deleted");
+  });
+  });
 
 app.listen(port, () => {
   console.log('express server listening on port ' + port);

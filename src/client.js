@@ -1,9 +1,7 @@
 export default function(){
 $(document).ready(function () {
   function liElement(name,description){
-    return `<li class="list-group-item"><ul class="inner-list"><li><button type="button" class="close float-left" aria-label="Close" data-name="${name}">
-  <span aria-hidden="true">&times;</span>
-</button><span>Name:</span> ${name}</li><li><span>Description:</span> ${description}</li></ul></li>`;
+    return `<li class="list-group-item"><ul class="inner-list"><li><button type="button" class="close" aria-label="Close" data-name="${name}"><span aria-hidden="true">&times;</span></button><span>Name:</span> ${name}</li><li><span>Description:</span> ${description}</li></ul></li>`;
   }
   function appendFamilyList(family) {
   var list = [];
@@ -18,7 +16,8 @@ $.get('/family', function(data){
 });
 
 $('form').on('submit', function(e){
-  event.preventDefault(); //prevents submit and refreash of page
+  //e.defaultPrevented(); //prevents submit and refreash of page
+    e.preventDefault();
   if( !$('#nameInput').val() || !$('#descriptionInput').val()){
     alert("you have not filled in both fields");
   } else {
@@ -36,6 +35,7 @@ form.trigger('reset'); //cleans up form text input fields
 
 
 $('.family-list').on('click', 'button[data-name]', (event) => {
+  event.preventDefault();
   if (!confirm('Do you really want to get rid of one of your family!')){
     return false;
   }

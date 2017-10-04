@@ -25,15 +25,6 @@ form, button,li{
   background-size: cover;
   color: white;
 }
-button {
-  span{
-  display: block;
-  margin-right: 10px;
-  &:hover{
-    color: red;
-  }
-}
-}
 .inner-list {
     width:100%;
     margin: 0;
@@ -42,6 +33,11 @@ button {
 span{
   font-weight: 600;
   color:#4A5A47;
+}
+button{
+  display: block;
+  float: left;
+  margin-right: 5px;
 }
   li{
     flex: 1;
