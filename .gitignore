@@ -2,3 +2,7 @@ node_modules
 dist
 .env
 _custom.min.css
+webpack.common.js
+webpack.dev.js
+webpack.prod.js
+mongod.conf

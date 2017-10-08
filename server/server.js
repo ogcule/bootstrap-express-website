@@ -6,8 +6,8 @@ import logger from 'morgan';
 const MongoClient = require('mongodb').MongoClient
 import assert from 'assert';
 const ObjectId = require('mongodb').ObjectID;
-
-let url = 'mongodb://localhost:27017/family';
+require('dotenv').config();
+let url = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds113445.mlab.com:13445/family`;
 let port = process.env.PORT || 3000;
 let parseUrlencoded = bodyParser.urlencoded({ extended: false});
 
@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, '..', 'dist')));
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
   let collection = db.collection('member');
-  console.log("Connected successfully to server");
+  console.log("Connected successfully to mongodb server");
   app.route('/family').get(function(request, response){
     collection.find({}).toArray(function(err, docs) {
       assert.equal(err, null);
