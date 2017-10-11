@@ -18,9 +18,6 @@ $.get('/family', function(data){
 $('form').on('submit', function(e){
   //e.defaultPrevented(); //prevents submit and refreash of page
     e.preventDefault();
-  if( !$('#nameInput').val() || !$('#descriptionInput').val()){
-    alert("you have not filled in both fields");
-  } else {
   let form = $(this);
   $.ajax('/family', {
     method: 'POST',
@@ -30,7 +27,6 @@ $('form').on('submit', function(e){
     $('.family-list').append(liElement(response.name, response.description));
 form.trigger('reset'); //cleans up form text input fields
   });
-}
 });
 
 
