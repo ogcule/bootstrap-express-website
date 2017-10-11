@@ -35,12 +35,12 @@ $('.family-list').on('click', 'button[data-id]', (event) => {
 let target = $(event.currentTarget);
 console.log(target.data('description'));
   $('.warn').append( `<div class='alert alert-danger alert-dismissible fade show' role='alert'>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
   Do you really want to get rid of one of your <strong>family</strong>!
+  <button type="button" class="btn btn-success" data-dismiss="alert">Yes</button>
+<button type="button" class="btn btn-danger" data-dismiss="alert">No</button>
 </div>` );
-$('.alert').on('closed.bs.alert', function () {
+$('.alert').on('click', '.btn-success', function () {
+  console.log("clicked yes");
   $.ajax({
    method: 'DELETE',
    url:'/family/' + target.data('id')

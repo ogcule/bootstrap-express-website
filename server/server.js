@@ -6,7 +6,7 @@ import logger from 'morgan';
 const MongoClient = require('mongodb').MongoClient
 import assert from 'assert';
 const ObjectId = require('mongodb').ObjectID;
-require('dotenv').config();
+require('dotenv').config(); //dotenv used so I can hide password and username in .env which is in .gitignore
 let url = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds113445.mlab.com:13445/family`;
 let port = process.env.PORT || 3000;
 let parseUrlencoded = bodyParser.urlencoded({ extended: false});
@@ -27,7 +27,6 @@ MongoClient.connect(url, function(err, db) {
     });
   }).post(parseUrlencoded, function(request,response){
     let newMember = request.body;
-    //response.status(201).json(newMember);
     collection.insertOne(newMember);
     collection.find({name:newMember.name}).toArray(function(err, doc) {
       assert.equal(err, null);
