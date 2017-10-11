@@ -1,12 +1,12 @@
 export default function(){
 $(document).ready(function () {
-  function liElement(name,description){
-    return `<li class="list-group-item"><ul class="inner-list"><li><button type="button" class="close" aria-label="Close" data-name="${name}"><span aria-hidden="true">&times;</span></button><span>Name:</span> ${name}</li><li><span>Description:</span> ${description}</li></ul></li>`;
+  function liElement(id,name,description){
+    return `<li class="list-group-item"><ul class="inner-list"><li><button type="button" class="close" aria-label="Close" data-id=${id} data-name=${name} data-description=${description}><span aria-hidden="true">&times;</span></button><span>Name:</span> ${name}</li><li><span>Description:</span> ${description}</li></ul></li>`;
   }
   function appendFamilyList(family) {
   var list = [];
   for(var i in family){
-  list.push(liElement(family[i].name, family[i].description));
+  list.push(liElement(family[i]._id, family[i].name, family[i].description));
   }
   $('.family-list').append(list);
   }
@@ -24,25 +24,46 @@ $('form').on('submit', function(e){
     dataType: "json",
     data: form.serialize() //serialize merges all form fields for submission
   }).done(function(response){
-    $('.family-list').append(liElement(response.name, response.description));
+    $('.family-list').append(liElement(response[0]._id, response[0].name, response[0].description));
 form.trigger('reset'); //cleans up form text input fields
   });
 });
 
 
-$('.family-list').on('click', 'button[data-name]', (event) => {
+$('.family-list').on('click', 'button[data-id]', (event) => {
   event.preventDefault();
-  if (!confirm('Do you really want to get rid of one of your family!')){
-    return false;
-  }
-  let target = $(event.currentTarget);
+let target = $(event.currentTarget);
+console.log(target.data('description'));
+  $('.warn').append( `<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  Do you really want to get rid of one of your <strong>family</strong>!
+</div>` );
+$('.alert').on('closed.bs.alert', function () {
   $.ajax({
    method: 'DELETE',
-   url:'/family/' + target.data('name')
+   url:'/family/' + target.data('id')
  }).done( (res)=> {
    console.log(res);
    target.parents('li').remove();
  })
+
+ })
 });
+
+
+  window.addEventListener("load", function() {
+    var form = document.getElementById("needs-validation");
+    form.addEventListener("submit", function(event) {
+      if (form.checkValidity() == false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add("was-validated");
+    }, false);
+  }, false);
+
+
 });
 }

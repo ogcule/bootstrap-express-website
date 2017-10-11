@@ -27,14 +27,18 @@ MongoClient.connect(url, function(err, db) {
     });
   }).post(parseUrlencoded, function(request,response){
     let newMember = request.body;
-    response.status(201).json(newMember);
-    console.log(newMember);
+    //response.status(201).json(newMember);
     collection.insertOne(newMember);
+    collection.find({name:newMember.name}).toArray(function(err, doc) {
+      assert.equal(err, null);
+      response.status(201).json(doc);
+    })
+
 
   });
-  app.delete('/family/:name', function(req, res){
-    collection.deleteOne({name:req.params.name});
-    res.send(req.params.name +" deleted");
+  app.delete('/family/:id', function(req, res){
+    collection.deleteOne({"_id": ObjectId(req.params.id)});
+    res.send(req.params.id +" deleted");
   });
   });
 
