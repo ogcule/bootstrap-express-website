@@ -1,7 +1,6 @@
 export default function(){
 $(document).ready(function () {
   let warnDisplay = false;
-  console.log(warnDisplay);
   function liElement(id,name,description){
     return `<li class="list-group-item"><ul class="inner-list"><li><button type="button" class="close" aria-label="Close" data-id=${id} data-name=${name} data-description=${description}><span aria-hidden="true">&times;</span></button><span>Name:</span> ${name}</li><li><span>Description:</span> ${description}</li></ul></li>`;
   }
