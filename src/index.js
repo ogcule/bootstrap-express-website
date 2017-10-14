@@ -2,6 +2,7 @@
 import 'bootstrap';
 import './index.scss';
 import client from './client';
+//for validating form
 import 'jquery-validation';
 
 client();
