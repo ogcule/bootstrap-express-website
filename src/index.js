@@ -2,5 +2,6 @@
 import 'bootstrap';
 import './index.scss';
 import client from './client';
+import 'jquery-validation';
 
 client();
